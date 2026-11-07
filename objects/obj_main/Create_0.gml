@@ -88,7 +88,7 @@ attacks = [
 
 audio_play_sound(mus_sunlit_thunderscapes_ocularnebula, 10, true)
 
-story_index = 30 // The current bit of the story we're on.
+story_index = 0 // The current bit of the story we're on.
 story_text_pos = 0 // And the position of the text to render.
 story = [
 	add_text(c_white, "A 24 hour game jam project by Wonda.\n\nUse Left Mouse Button to advance the story."),
