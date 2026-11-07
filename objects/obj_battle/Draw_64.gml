@@ -40,8 +40,10 @@ for(var i = 0; i < array_length(attacks); i++) {
 	draw_text(_x1 + _margin, _y1 + (_height * 0.5) - 8, attacks[i].name)
 }
 
-draw_set_color(c_white)
+draw_set_color(c_gray)
 draw_rectangle(_margin, room_height - _height - _margin, room_width - _margin, room_height - _margin, false)
+draw_set_color(c_white)
+draw_rectangle(_margin, room_height - _height - _margin, lerp(_margin, room_width - _margin, clamp(obj_main.player_health / obj_main.player_health_max, 0.0, 1.0)), room_height - _margin, false)
 draw_set_color(c_black)
 draw_rectangle(_margin + _padding, room_height - _height - _margin + _padding, room_width - _margin - _padding, room_height - _margin - _padding, false)
 draw_set_color(c_dkgray)

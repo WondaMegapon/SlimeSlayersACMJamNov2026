@@ -33,9 +33,11 @@ if (story[story_index].type == STORY_BEAT.TEXT && story_text_pos < string_length
 	switch(string_char_at(story[story_index].text, story_text_pos)) {
 		case " ":
 		case "\n":
+			text_breath = 0
 			break;
 		default:
-			audio_play_sound(story[story_index].sound, 0, false, 1.0, 0.0, 1.0 + random_range(-0.02, 0.01))
+			audio_play_sound(story[story_index].sound, 0, false, 0.8 - (0.025 * text_breath), 0.0, 1.0 + random_range(-0.02, 0.01))
+			text_breath++
 	}
 	text_time_prev = current_time + text_time
 }
