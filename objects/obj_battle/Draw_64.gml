@@ -27,7 +27,7 @@ for(var i = 0; i < array_length(attacks); i++) {
 	var _x2 = _margin + _width
 	var _y1 = _margin + i * ( _height + _margin)
 	var _y2 = _margin + _height + i * (_height + _margin)
-	var _cursorOver = point_in_rectangle(window_mouse_get_x(), window_mouse_get_y(), _x1, _y1, _x2, _y2)
+	var _cursorOver = point_in_rectangle(mouse_x, mouse_y, _x1, _y1, _x2, _y2)
 	var _cursorSelected = selected_attack_index == i
 	if (_cursorOver) hover_attack_index = i
 	draw_set_color(_aboveCost ? (_cursorOver ? c_yellow : (_cursorSelected ? c_red : _activeColor)) : _inactiveColor)

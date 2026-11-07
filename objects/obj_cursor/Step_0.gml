@@ -2,10 +2,10 @@
 // You can write your code in this editor
 
 // Handling movement.
-var _x = lerp(x, window_mouse_get_x(), 0.6)
-var _y = lerp(y, window_mouse_get_y(), 0.6)
-_x = clamp(_x, 0, window_get_width())
-_y = clamp(_y, 0, window_get_height())
+var _x = lerp(x, mouse_x, 0.6)
+var _y = lerp(y, mouse_y, 0.6)
+_x = clamp(_x, 0, room_width)
+_y = clamp(_y, 0, room_height)
 
 x = _x
 y = _y

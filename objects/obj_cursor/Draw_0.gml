@@ -3,11 +3,11 @@
 
 draw_set_color(c_white)
 draw_set_alpha(0.5)
-draw_circle(window_mouse_get_x(), window_mouse_get_y(), 4, true)
+draw_circle(mouse_x, mouse_y, 4, true)
 draw_set_alpha(1.0)
 
 if (iframes < current_time || current_time % 2 == 0) {
-	draw_set_color(c_fuchsia)
+	draw_set_color(obj_main.c_vella)
 	draw_circle(x, y, 6, false)
 	draw_set_color(c_white)
 	draw_circle(x, y, 4, false)

@@ -8,7 +8,7 @@ if(instance_number(obj_battle_enemy) <= 0) {
 
 // Running spellcasting.
 if (mouse_check_button_pressed(mb_left) && selected_attack_index >= 0 && hover_attack_index == -1 && obj_main.player_focus >= attacks[selected_attack_index].cost) {
-	attacks[selected_attack_index].func(x, y)
+	attacks[selected_attack_index].func(obj_cursor.x, obj_cursor.y)
 	obj_main.player_focus -= attacks[selected_attack_index].cost
 	if(obj_main.player_focus < attacks[selected_attack_index].cost) selected_attack_index = -1
 }
