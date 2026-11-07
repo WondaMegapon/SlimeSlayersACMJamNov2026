@@ -1,0 +1,25 @@
+/// @description Insert description here
+// You can write your code in this editor
+
+if (player_health <= 0) {
+	game_restart()	
+}
+
+if ((mouse_check_button_pressed(mb_left) || mouse_check_button(mb_middle)) && (!instance_exists(obj_battle))) {
+	if (story_text_pos >= string_length(story[story_index].text)) {
+		story_index++ // Incrementing the current bit of the story.
+		story_text_pos = 0 // Resetting text position.
+		if (story[story_index].type == STORY_BEAT.BATTLE) {
+			instance_create_depth(x, y, depth - 1, obj_battle, {
+				spawn: story[story_index].spawn,
+				attacks: story[story_index].attacks
+			})  // Yay the battle.	
+		}
+	} else {
+		story_text_pos = string_length(story[story_index].text)
+	}
+}
+
+if (story[story_index].type == STORY_BEAT.TEXT && story_text_pos < string_length(story[story_index].text)) {
+	story_text_pos++
+}
