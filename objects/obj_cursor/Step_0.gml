@@ -19,9 +19,11 @@ if(_nearest_enemy && iframes < current_time) {
 	var _distance = point_distance(x, y, _nearest_enemy.x, _nearest_enemy.y)
 	if(_distance < 48) {
 		obj_main.player_focus = clamp(0, obj_main.player_focus_max, obj_main.player_focus + 1) // Awarding Focus
+		audio_play_sound(snd_focus, 0, false)
 	}
 	if(_distance < 24) {
 		obj_main.player_health = clamp(0, obj_main.player_health_max, obj_main.player_health - 1) // Hurting the player.
+		audio_play_sound(snd_hit_player, 5, false)
 		iframes = current_time + 1000
 	}
 }
