@@ -9,6 +9,7 @@ player_focus = 0 // Points gained from grazing.
 text_time = 30 // How many milliseconds does it take for text to advance?
 text_time_prev = 0 // Tracking when the last text advance happened
 text_breath = 0 // Consecutive non-whitespace character slowly reduce the volume.
+game_over = false // tracking game over.
 
 // Colors?
 c_ranna = #fc2c03
@@ -115,13 +116,19 @@ story = [
 			var _h = room_height
 		    instance_create_depth(random_range(_w * 0.3, _w * 0.7), random_range(_h * 0.3, _h * 0.7), 0, obj_battle_enemy, {
 				speed: 1,
+				target_dir: 0,
 				create: function() {},
 				step: function() {
 					with(other) {
-						if (move_timer < current_time || !_withinBounds) {
-							direction = lerp(direction, random_range(0, 360), 0.95)
-							move_timer = current_time + 1000
+						if (move_timer < current_time) {
+							target_dir = random_range(0, 360)
+							move_timer = current_time + 2000
 						}
+						if (!_withinBounds) {
+							target_dir = point_direction(x, y, room_width * 0.5 + random_range(-64, 64), room_height * 0.5 + random_range(-64, 64))
+							direction = lerp(direction, target_dir, 0.55)
+						}
+						direction = lerp(direction, target_dir, 0.05)
 					}
 				},
 				draw: function() {
@@ -181,12 +188,11 @@ story = [
 	add_text(c_triff, "Hey! It's not my fault that Ranna keeps trapping every one of them, August!", "Thorn (Triff)", snd_voice_triff),
 	add_text(c_august, "It's April, thank you.", "August", snd_voice_august),
 	add_text(c_vella, "Now that the ghosts are gone,\nwhat do we do?", "Vert (Vella)", snd_voice_vella),
-	add_text(c_white, "End of demo.\n\nI wanted to make sure what we had was good."),
-	add_text(c_white, "This game jam ended up being the perfect opprotunity to test out mechanics relevant to Slime Slayers."),
-	add_text(c_white, "Since I've tested how these mechanics feel, I can now make a better decision where I want to take this project of mine."),
-	add_text(c_white, "This was very, very fun. I'm glad I got to spend these 24 hours with y'all."),
+	add_text(c_white, "End of demo."),
+	add_text(c_white, "This game jam ended up being the perfect opportunity to test out mechanics relevant to\nSlime Slayers."),
+	add_text(c_white, "I can now make a better decision where I want to take this project of mine."),
 	add_text(c_white, "As for credits..."),
-	add_text(c_white, "The song is Sunlit Thunderscapes by OcularNebula.\nTheir music is under CC BY-NC license, which makes it free game for use in the jam.\nGo listen to their other music! Especially Reedz.", "Music Credits"),
+	add_text(c_white, "The song is Sunlit Thunderscapes by OcularNebula.\nTheir music is under CC BY-NC license, which makes it fair game for use in the jam.\nGo listen to their other music! Especially Reedz.", "Music Credits"),
 	add_text(c_white, "Gamemaker 2022\nThe only IDE that is ergonomic for my brain. I've sunk countless hours into it, and I have a feeling I'll sink many, many more.", "Tool Credits"),
 	add_text(c_white, "Bfxr\nStar reminded me that this tool existed, and it's so lovely for making noises. You define a bunch of parameters and it makes cute blips.", "Tool Credits"),
 	add_text(c_white, "Special thanks to all my friends who are kind of responsible for the characters here.\n\nMeow at me to make more Slime Slayers things!", "Special Thanks"),

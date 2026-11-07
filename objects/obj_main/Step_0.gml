@@ -9,8 +9,12 @@ if (keyboard_check_pressed(vk_escape)) {
 	game_end()	
 }
 
-if (player_health <= 0) {
+if (mouse_check_button_pressed(mb_left) && game_over) {
 	game_restart()	
+}
+
+if (player_health <= 0) {
+	game_over = true
 }
 
 if ((mouse_check_button_pressed(mb_left) || mouse_check_button(mb_middle)) && (!instance_exists(obj_battle))) {

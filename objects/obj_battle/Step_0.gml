@@ -1,6 +1,9 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+// Breaking if game is over.
+if (obj_main.game_over) return;
+
 // Aborting things if we're out of enemies.
 if(instance_number(obj_battle_enemy) <= 0) {
 	instance_destroy()

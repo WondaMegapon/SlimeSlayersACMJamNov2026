@@ -1,6 +1,9 @@
 /// @description Insert description here
 // You can write your code in this editor
 
+// Breaking if game is over.
+if (obj_main.game_over) return;
+
 // Handling movement.
 var _x = lerp(x, mouse_x, 0.6)
 var _y = lerp(y, mouse_y, 0.6)
