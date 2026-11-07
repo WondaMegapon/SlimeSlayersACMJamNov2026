@@ -4,4 +4,5 @@
 move_timer = 0
 enemy_health_max = 5
 enemy_health = enemy_health_max
+damaged = false
 create()

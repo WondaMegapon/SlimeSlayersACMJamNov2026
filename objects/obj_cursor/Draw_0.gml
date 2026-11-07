@@ -16,7 +16,7 @@ if (iframes < current_time || current_time % 2 == 0) {
 	if(_nearest_enemy) {
 		var _distance = point_distance(x, y, _nearest_enemy.x, _nearest_enemy.y)
 		draw_set_alpha(48 / max(0.01,  _distance) - 0.2)
-		draw_circle(x, y, 24, true)
+		draw_circle(x, y, 26, true)
 	}
 	draw_set_alpha(1.0)
 }

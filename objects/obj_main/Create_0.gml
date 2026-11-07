@@ -59,6 +59,7 @@ attacks = [
 		var _nearest = instance_nearest(_x, _y, obj_battle_enemy);
 		if (_nearest) {
 			_nearest.enemy_health -= 3
+			_nearest.damaged = true
 			audio_play_sound(snd_hit_slime, 3, false)
 		}
 	}, function(_x, _y) {
@@ -68,7 +69,7 @@ attacks = [
 			draw_line(_nearest.x, _nearest.y - 32, _nearest.x, _nearest.y + 32)
 		}
 	}),
-	add_attack("Explosion", 150, c_vella, function(_x, _y) {
+	add_attack("Explosion", 160, c_vella, function(_x, _y) {
 		var _nearest = instance_nearest(_x, _y, obj_battle_enemy);
 		if (_nearest) {
 			audio_play_sound(snd_hit_slime, 3, false)
@@ -76,6 +77,7 @@ attacks = [
 			   var _target = instance_find(obj_battle_enemy, i)
 			   if (point_distance(obj_cursor.x, obj_cursor.y, _target.x, _target.y) < 128 + 32) {
 				   _target.enemy_health -= 4
+				   _target.damaged = true
 			   }
 			}
 		}
@@ -86,26 +88,26 @@ attacks = [
 
 audio_play_sound(mus_sunlit_thunderscapes_ocularnebula, 10, true)
 
-story_index = 0 // The current bit of the story we're on.
+story_index = 30 // The current bit of the story we're on.
 story_text_pos = 0 // And the position of the text to render.
 story = [
 	add_text(c_white, "A 24 hour game jam project by Wonda.\n\nUse Left Mouse Button to advance the story."),
 	add_text(c_white, "It was a night like any other..."),
-	add_text(c_white, "Four individuals are huddled around a table in a lab.\nCharacter sheets and game dice litter the room.\nPlanning fills the air."),
-	add_text(c_ranna, "Here, Vella. Let's try out a simple little combat encounter.", "Ranna", snd_voice_ranna),
-	add_text(c_triff, "Do you have to make it easy for her?\nWe're wasting precious time.", "Triff", snd_voice_triff),
+	add_text(c_white, "Four individuals are huddled around a table in a lab.\n\nCharacter sheets and game dice litter the room."),
+	add_text(c_ranna, "Alright, Vella. Now that you have your character sheet, let's try out a simple little combat encounter.", "Ranna", snd_voice_ranna),
+	add_text(c_triff, "Do you have to go through this entire thing for her?\nWe're wasting precious time.", "Triff", snd_voice_triff),
 	add_text(c_ranna, "It wouldn't hurt to teach her.", "Ranna", snd_voice_ranna),
-	add_text(c_august, "You must trust the gods, Thorn! Their judgement is key.", "August", snd_voice_august),
+	add_text(c_august, "You must trust the gods, Thorn!\nTheir judgement is important.", "August", snd_voice_august),
 	add_text(c_triff, "Then give her the tutorial.", "Thorn (Triff)", snd_voice_triff),
 	add_text(c_ranna, "Okay, then...", "Ranna", snd_voice_ranna),
-	add_text(c_ranna, "Two slimes appear from the entrance of the dungeon.\n\nYou must focus your magic and blast them away!", "GM (Ranna)", snd_voice_ranna),
-	add_text(c_ranna, "You have to stay close to the enemy to focus onto them.", "GM (Ranna)", snd_voice_ranna),
-	add_text(c_ranna, "But don't stay too close, otherwise they will attack you.", "GM (Ranna)", snd_voice_ranna),
+	add_text(c_ranna, "Slimes emerged from the entrance of the dungeon.\n\nYou must focus your magic and blast them away!", "GM (Ranna)", snd_voice_ranna),
+	add_text(c_ranna, "You have to stay close to the enemy to focus them.", "GM (Ranna)", snd_voice_ranna),
+	add_text(c_ranna, "But don't stay too close, or they will attack you.", "GM (Ranna)", snd_voice_ranna),
 	add_text(c_ranna, "With enough focus, you can select one of your spells and cast it at the slimes.", "GM (Ranna)", snd_voice_ranna),
-	add_text(c_ranna, "If you deal enough damage, you will incapacitate the enemy.", "GM (Ranna)", snd_voice_ranna),
+	add_text(c_ranna, "If you deal enough damage, you will kill the slime.", "GM (Ranna)", snd_voice_ranna),
 	add_text(c_ranna, "Defeat all of them, and you will win the encounter.", "GM (Ranna)", snd_voice_ranna),
 	add_text(c_triff, "And if you don't...", "Thorn (Triff)", snd_voice_triff),
-	add_text(c_triff, "You will have to write an essay on why you have failed.", "Thorn (Triff)", snd_voice_triff),
+	add_text(c_triff, "You'll have to write an essay on why you failed.", "Thorn (Triff)", snd_voice_triff),
 	add_text(c_ranna, "(Knock it off.)\n\nGood luck, Vella.", "GM (Ranna)", snd_voice_ranna),
 	add_battle(function() {
 		for (var i = 0; i < 2; ++i) {
@@ -124,7 +126,7 @@ story = [
 				},
 				draw: function() {
 					with(other) {
-						draw_set_color(c_red)
+						draw_set_color(damaged ? c_white : c_red)
 						draw_circle(x, y, 24, true)
 						var _xx = x + lengthdir_x(8, direction)
 						var _yy = y + lengthdir_y(8, direction)
@@ -162,7 +164,7 @@ story = [
 				},
 				draw: function() {
 					with(other) {
-						draw_set_color(c_red)
+						draw_set_color(damaged ? c_white : c_red)
 						draw_circle(x, y, 24, true)
 						var _xx = x + lengthdir_x(8, direction)
 						var _yy = y + lengthdir_y(8, direction)
@@ -180,10 +182,13 @@ story = [
 	add_text(c_august, "It's April, thank you.", "August", snd_voice_august),
 	add_text(c_vella, "Now that the ghosts are gone,\nwhat do we do?", "Vert (Vella)", snd_voice_vella),
 	add_text(c_white, "End of demo.\n\nI wanted to make sure what we had was good."),
+	add_text(c_white, "This game jam ended up being the perfect opprotunity to test out mechanics relevant to Slime Slayers."),
+	add_text(c_white, "Since I've tested how these mechanics feel, I can now make a better decision where I want to take this project of mine."),
+	add_text(c_white, "This was very, very fun. I'm glad I got to spend these 24 hours with y'all."),
 	add_text(c_white, "As for credits..."),
 	add_text(c_white, "The song is Sunlit Thunderscapes by OcularNebula.\nTheir music is under CC BY-NC license, which makes it free game for use in the jam.\nGo listen to their other music! Especially Reedz.", "Music Credits"),
 	add_text(c_white, "Gamemaker 2022\nThe only IDE that is ergonomic for my brain. I've sunk countless hours into it, and I have a feeling I'll sink many, many more.", "Tool Credits"),
-	add_text(c_white, "Bfxr\nStar reminded me this tool existed, and it's so lovely for making noises. You define a bunch of parameters and it makes cute blips.", "Tool Credits"),
+	add_text(c_white, "Bfxr\nStar reminded me that this tool existed, and it's so lovely for making noises. You define a bunch of parameters and it makes cute blips.", "Tool Credits"),
 	add_text(c_white, "Special thanks to all my friends who are kind of responsible for the characters here.\n\nMeow at me to make more Slime Slayers things!", "Special Thanks"),
 	add_text(c_white, ". . ."),
 	add_text(c_white, "That's it.\nThere's not another combat encounter here."),

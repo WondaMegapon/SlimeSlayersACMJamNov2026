@@ -17,7 +17,7 @@ if !instance_exists(obj_battle) return;
 var _nearest_enemy = instance_nearest(x, y, obj_battle_enemy)
 if(_nearest_enemy && iframes < current_time) {
 	var _distance = point_distance(x, y, _nearest_enemy.x, _nearest_enemy.y)
-	if(_distance < 48) {
+	if(_distance < 52) {
 		obj_main.player_focus = clamp(0, obj_main.player_focus_max, obj_main.player_focus + 1) // Awarding Focus
 		audio_play_sound(snd_focus, 0, false)
 	}
